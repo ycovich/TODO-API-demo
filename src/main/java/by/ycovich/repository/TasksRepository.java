@@ -1,6 +1,6 @@
 package by.ycovich.repository;
 
-import by.ycovich.model.Task;
+import by.ycovich.entity.Task;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

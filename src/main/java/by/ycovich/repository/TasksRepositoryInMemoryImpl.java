@@ -1,6 +1,6 @@
 package by.ycovich.repository;
 
-import by.ycovich.model.Task;
+import by.ycovich.entity.Task;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class TasksRepositoryImpl implements TasksRepository{
+public class TasksRepositoryInMemoryImpl implements TasksRepository{
     private final List<Task> tasks = new LinkedList<>(){
         {
             this.add(new Task("morning exercises"));

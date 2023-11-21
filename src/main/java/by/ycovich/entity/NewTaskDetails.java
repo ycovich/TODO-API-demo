@@ -1,3 +1,3 @@
-package by.ycovich.model;
+package by.ycovich.entity;
 
 public record NewTaskDetails (String details){}

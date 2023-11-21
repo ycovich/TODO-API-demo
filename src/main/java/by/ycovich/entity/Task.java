@@ -1,4 +1,4 @@
-package by.ycovich.model;
+package by.ycovich.entity;
 
 import java.util.UUID;
 

@@ -2,8 +2,8 @@ package by.ycovich.controller;
 
 
 import by.ycovich.exception.ErrorResponses;
-import by.ycovich.model.NewTaskDetails;
-import by.ycovich.model.Task;
+import by.ycovich.entity.NewTaskDetails;
+import by.ycovich.entity.Task;
 import by.ycovich.repository.TasksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
