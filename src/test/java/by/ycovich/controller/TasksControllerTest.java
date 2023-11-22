@@ -61,14 +61,14 @@ class TasksControllerTest {
                 Locale.ENGLISH);
         // then
         assertNotNull(responseEntity);
-        assertEquals(MediaType.APPLICATION_JSON, responseEntity.getHeaders().getContentType());
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+        assertEquals(MediaType.APPLICATION_JSON, responseEntity.getHeaders().getContentType());
+
 
         if (responseEntity.getBody() instanceof Task task){
-            assertNotNull(task.getId());
-            assertEquals(details, task.getDetails());
-            assertFalse(task.isCompleted());
-            assertEquals(URI.create("http://localhost:8080/api/tasks/" + task.getId()),
+            assertEquals(details, task.details());
+            assertFalse(task.completed());
+            assertEquals(URI.create("http://localhost:8080/api/tasks/" + task.id()),
                     responseEntity.getHeaders().getLocation());
 
             verify(this.tasksRepository).save(task);

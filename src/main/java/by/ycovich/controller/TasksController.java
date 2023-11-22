@@ -54,7 +54,7 @@ public class TasksController {
         this.tasksRepository.save(task);
         return ResponseEntity.created(uriComponentsBuilder
                         .path("api/tasks/{id}")
-                        .build(Map.of("id", task.getId())))
+                        .build(Map.of("id", task.id())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(task);
     }
