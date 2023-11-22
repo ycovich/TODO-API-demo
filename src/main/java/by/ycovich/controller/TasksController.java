@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -35,6 +36,7 @@ public class TasksController {
                 .body(this.tasksRepository.findAll());
     }
 
+    @Transactional
     @PostMapping
     public ResponseEntity<?> createTask(@RequestBody NewTaskDetails details,
                                         UriComponentsBuilder uriComponentsBuilder,
@@ -51,8 +53,8 @@ public class TasksController {
         var task = new Task(details.details());
         this.tasksRepository.save(task);
         return ResponseEntity.created(uriComponentsBuilder
-                        .path("api/tasks/{taskId}")
-                        .build(Map.of("taskId", task.id())))
+                        .path("api/tasks/{id}")
+                        .build(Map.of("id", task.getId())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(task);
     }

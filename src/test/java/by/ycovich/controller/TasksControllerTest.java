@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -24,6 +25,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@Transactional
 @ExtendWith(MockitoExtension.class)
 class TasksControllerTest {
     @Mock
@@ -63,10 +65,10 @@ class TasksControllerTest {
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
 
         if (responseEntity.getBody() instanceof Task task){
-            assertNotNull(task.id());
-            assertEquals(details, task.details());
-            assertFalse(task.completed());
-            assertEquals(URI.create("http://localhost:8080/api/tasks/" + task.id()),
+            assertNotNull(task.getId());
+            assertEquals(details, task.getDetails());
+            assertFalse(task.isCompleted());
+            assertEquals(URI.create("http://localhost:8080/api/tasks/" + task.getId()),
                     responseEntity.getHeaders().getLocation());
 
             verify(this.tasksRepository).save(task);
