@@ -1,4 +1,3 @@
-src/main/resources/
 .idea
 target
-
+src/main/resources/application.properties
