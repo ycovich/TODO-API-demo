@@ -1,6 +1,7 @@
 package by.ycovich.controller;
 
 
+import by.ycovich.entity.ApplicationUser;
 import by.ycovich.exception.ErrorResponses;
 import by.ycovich.entity.NewTaskDetails;
 import by.ycovich.entity.Task;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -30,15 +32,16 @@ public class TasksController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> getTasks(){
+    public ResponseEntity<List<Task>> getTasks(@AuthenticationPrincipal  ApplicationUser user){
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(this.tasksRepository.findAll());
+                .body(this.tasksRepository.findByApplicationUserId(user.id()));
     }
 
     @Transactional
     @PostMapping
     public ResponseEntity<?> createTask(@RequestBody NewTaskDetails details,
+                                        @AuthenticationPrincipal ApplicationUser user,
                                         UriComponentsBuilder uriComponentsBuilder,
                                         Locale locale) {
         if (details == null || details.details().isBlank()) {
@@ -50,7 +53,7 @@ public class TasksController {
                     .body(new ErrorResponses(List.of(message)));
         }
 
-        var task = new Task(details.details());
+        var task = new Task(details.details(), user.id());
         this.tasksRepository.save(task);
         return ResponseEntity.created(uriComponentsBuilder
                         .path("api/tasks/{id}")
